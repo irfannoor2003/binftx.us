@@ -27,16 +27,16 @@ try {
     $mail->isSMTP();
     $mail->Host       = 'smtp.gmail.com';
     $mail->SMTPAuth   = true;
-    $mail->Username   = 'syedirfannoor996@gmail.com';
-    $mail->Password   = 'ingu fupx rpva uuis';
+    $mail->Username   = 'emial';
+    $mail->Password   = 'app_pass';
     $mail->SMTPSecure = 'tls';
     $mail->Port       = 587;
 
     // =========================
     // 📩 ADMIN EMAIL
     // =========================
-    $mail->setFrom('syedirfannoor996@gmail.com', 'BINTFX Website');
-    $mail->addAddress('syedirfannoor996@gmail.com');
+    $mail->setFrom('email', 'BINTFX Website');
+    $mail->addAddress('email');
 
     if(isset($_FILES['file']) && $_FILES['file']['error'] == 0){
         $mail->addAttachment($_FILES['file']['tmp_name'], $_FILES['file']['name']);
