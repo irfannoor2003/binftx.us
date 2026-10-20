@@ -27,22 +27,16 @@ try {
     $mail->isSMTP();
     $mail->Host       = getenv('APPLICATION_SMTP_HOST') ?: '';
     $mail->SMTPAuth   = true;
-    $mail->Username   = getenv('APPLICATION_SMTP_USERNAME') ?: '';
-    $mail->Password   = getenv('APPLICATION_SMTP_PASSWORD') ?: '';
-    $applicationEmail = getenv('APPLICATION_EMAIL') ?: '';
-
-    if ($mail->Host === '' || $mail->Username === '' || $mail->Password === '' || $applicationEmail === '') {
-        throw new RuntimeException('Application mail configuration is incomplete.');
-    }
-
+    $mail->Username   = 'syedirfannoor996@gmail.com';
+    $mail->Password   = 'ingu fupx rpva uuis';
     $mail->SMTPSecure = 'tls';
     $mail->Port       = 587;
 
     // =========================
     //  ADMIN EMAIL
     // =========================
-    $mail->setFrom($applicationEmail, 'BINTFX.US');
-    $mail->addAddress($applicationEmail);
+    $mail->setFrom('syedirfannoor996@gmail.com', 'BINTFX Website');
+    $mail->addAddress('syedirfannoor996@gmail.com');
 
     if(isset($_FILES['file']) && $_FILES['file']['error'] == 0){
         $mail->addAttachment($_FILES['file']['tmp_name'], $_FILES['file']['name']);
