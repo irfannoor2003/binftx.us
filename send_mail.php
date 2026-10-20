@@ -28,7 +28,7 @@ try {
     $mail->Host       = getenv('APPLICATION_SMTP_HOST') ?: '';
     $mail->SMTPAuth   = true;
     $mail->Username   = 'syedirfannoor996@gmail.com';
-    $mail->Password   = 'ingu fupx rpva uuis';
+    $mail->Password   = '';
     $mail->SMTPSecure = 'tls';
     $mail->Port       = 587;
 
