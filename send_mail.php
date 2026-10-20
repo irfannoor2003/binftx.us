@@ -25,18 +25,24 @@ try {
 
     // SMTP
     $mail->isSMTP();
-    $mail->Host       = 'smtp.gmail.com';
+    $mail->Host       = getenv('APPLICATION_SMTP_HOST') ?: '';
     $mail->SMTPAuth   = true;
-    $mail->Username   = 'emial';
-    $mail->Password   = 'app_pass';
+    $mail->Username   = getenv('APPLICATION_SMTP_USERNAME') ?: '';
+    $mail->Password   = getenv('APPLICATION_SMTP_PASSWORD') ?: '';
+    $applicationEmail = getenv('APPLICATION_EMAIL') ?: '';
+
+    if ($mail->Host === '' || $mail->Username === '' || $mail->Password === '' || $applicationEmail === '') {
+        throw new RuntimeException('Application mail configuration is incomplete.');
+    }
+
     $mail->SMTPSecure = 'tls';
     $mail->Port       = 587;
 
     // =========================
-    // 📩 ADMIN EMAIL
+    //  ADMIN EMAIL
     // =========================
-    $mail->setFrom('email', 'BINTFX Website');
-    $mail->addAddress('email');
+    $mail->setFrom($applicationEmail, 'BINTFX.US');
+    $mail->addAddress($applicationEmail);
 
     if(isset($_FILES['file']) && $_FILES['file']['error'] == 0){
         $mail->addAttachment($_FILES['file']['tmp_name'], $_FILES['file']['name']);
@@ -115,7 +121,7 @@ try {
     $mail->send();
 
     // =========================
-    // 💌 AUTO REPLY
+    //  AUTO REPLY
     // =========================
     $mail->clearAddresses();
     $mail->clearAttachments();
@@ -134,7 +140,7 @@ try {
 
         <p>
             Thank you for applying for the <strong>$role</strong> position at <strong>BINTFX</strong>.
-            We’ve received your application and our team will review it shortly.
+            We received your application and our team will review it shortly.
         </p>
 
         <div style='margin:20px 0;padding:15px;background:#28b02b;border-radius:6px'>
@@ -142,7 +148,7 @@ try {
             Experience: $experience
         </div>
 
-        <p>We’ll get back to you soon.</p>
+        <p>We will get back to you soon.This email was generated automatically from bintfx.us Please do not reply.</p>
 
         <p style='margin-top:30px'>
             Regards,<br>
@@ -156,7 +162,7 @@ try {
 
     $mail->send();
 
-    // ✅ REDIRECT SUCCESS
+    //  REDIRECT SUCCESS
     header("Location: index.php?status=success");
     exit;
 
